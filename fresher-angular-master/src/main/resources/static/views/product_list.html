@@ -1,0 +1,76 @@
+<section class="container">
+		<section class="content">
+			<section class="content"></section>
+			<section class="content">
+				<h1>Product List</h1>
+				<h5>This is product list</h5>
+			</section>
+			<section class="content"></section>
+		</section>
+		<section class="content">
+			<section class="content"></section>
+			<section class="content">
+				<div class="form-inline">
+					<label>Search: </label><input class="form-control" type="text" ng-model="text_filter" value="" />
+				</div>
+				<br>
+				<table class="table">
+					<tr>
+						<th ng-click="orderByMe('model')">Model</th>
+						<th ng-click="orderByMe('year')">Year</th>
+						<th ng-click="orderByMe('price')">Price</th>
+						<th ng-click="orderByMe('producer')">Producer</th>
+						<th ng-click="orderByMe('total')">Available</th>
+						<th>Action</th>
+					</tr>
+					<tr ng-repeat="product in products | filter : text_filter | orderBy:myOrderBy">
+						<td>{{product.model}}</td>
+						<td>{{product.year}}</td>
+						<td>{{product.price | currency}}</td>
+						<td>{{product.producer}}</td>
+						<td>
+							
+							<div>
+							<button ng-click="addTotal(product.id)" class="btn btn-success">
+								<span style="color:white" class="glyphicon glyphicon-plus"></span>
+							</button></div>
+							<div>{{product.available | currency:"":0}}</div>
+							<div><button ng-disabled="product.available==0" ng-click="minusTotal(product.id)" class="btn btn-warning">
+								<span style="color:white" class="glyphicon glyphicon-minus"></span></div>
+							</button>
+						</td>
+						<td>
+							<button ng-click='remove($index)' type="button" class="btn btn-danger">
+								<span style="color:white" class="glyphicon glyphicon-glyphicon glyphicon-trash"></span>
+							</button>
+						</td>
+					</tr>
+				</table>
+			</section>
+			<section class="content"></section>
+		</section>
+		<section class="content">
+			<section class="content"></section>
+			<section class="content">
+				<form class="form-horizontal css-form" name="myForm" ng-submit="AddProduct()">
+					<h3>Add new product</h3>
+					<label>Model:</label>
+					<input type="text" class="form-control" ng-model="model" required />
+					<label>Year:</label>
+					<input type="text" class="form-control" ng-model="year" required />
+					<label>Price:</label>
+					<input type="text" class="form-control" ng-model="price" required/>
+					<label>Producer:</label>
+					<input type="text" class="form-control" ng-model="producer"  required />
+					<label>Available:</label>
+					<input name="available" type="text" pattern="[0-9]+" class="form-control" ng-model="available" required /><br>
+					<div ng-show="myForm.available.$dirty && myForm.available.$invalid">
+						<span ng-show="myForm.available.$error.required">Please fill out this record!</span>
+						<span ng-show="myForm.available.$error.pattern">Not Available</span>
+					</div>
+					<button type="submit" ng-disable="myForm.$invalid" class="btn btn-primary">Add</button>
+				</form>
+			</section>
+			<section class="content"></section>
+	</section>
+
